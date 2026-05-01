@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///C:/Users/Christoph%20Bader/Downloads/index_1.html -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wissenschaftliche Fragestellung – Proseminar NE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link href="./index_files/css2" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #2E5E9E;
+      --accent-dark: #1F4479;
+      --accent-light: #EBF3FB;
+      --accent-mid: #B5D4F4;
+      --text: #1a1a1a;
+      --text-muted: #6b7280;
+      --bg: #ffffff;
+      --surface: #f8f7f4;
+      --border: rgba(0,0,0,0.1);
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f0ede8;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .page-header { width: 100%; max-width: 700px; margin-bottom: 1.5rem; text-align: center; }
+    .page-header .institution {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+    }
+    .page-header h1 {
+      font-family: 'Lora', serif; font-size: 22px; font-weight: 500;
+      color: var(--accent-dark); line-height: 1.3; margin-bottom: 4px;
+    }
+    .page-header p { font-size: 13px; color: var(--text-muted); }
+
+    .chat-card {
+      width: 100%; max-width: 700px;
+      background: var(--bg); border-radius: 16px;
+      box-shadow: var(--shadow); overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+
+    .progress-bar { height: 3px; background: var(--accent-mid); }
+    .progress-fill { height: 100%; background: var(--accent); transition: width 0.5s ease; width: 0%; }
+    .progress-label {
+      font-size: 11px; color: var(--text-muted);
+      padding: 7px 1.25rem; background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .area-chips {
+      display: flex; gap: 6px; flex-wrap: wrap;
+      padding: 8px 1.25rem; background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .chip {
+      font-size: 10px; font-weight: 500; padding: 3px 8px;
+      border-radius: 20px; border: 1px solid var(--border);
+      color: var(--text-muted); background: var(--bg); transition: all 0.3s;
+    }
+    .chip.active { background: var(--accent-light); color: var(--accent); border-color: var(--accent-mid); }
+    .chip.done   { background: #e9f5ee; color: #2d7a4f; border-color: #a8d9bc; }
+
+    .messages {
+      padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;
+      min-height: 300px; max-height: 460px; overflow-y: auto; scroll-behavior: smooth;
+    }
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .msg { display: flex; gap: 10px; align-items: flex-start; animation: fadeUp 0.25s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .avatar {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 500; margin-top: 2px;
+    }
+    .msg.ai   .avatar { background: var(--accent-light); color: var(--accent); font-family: 'Lora', serif; font-size: 11px; }
+    .msg.user .avatar { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
+
+    .bubble { max-width: 86%; padding: 10px 14px; font-size: 14px; line-height: 1.7; border-radius: 12px; }
+    .msg.ai   .bubble { background: var(--surface); border: 1px solid var(--border); border-radius: 4px 12px 12px 12px; color: var(--text); }
+    .msg.user         { flex-direction: row-reverse; }
+    .msg.user .bubble { background: var(--accent); color: #fff; border-radius: 12px 4px 12px 12px; }
+
+    .typing-dots { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); animation: bounce 1.2s infinite; }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30%           { transform: translateY(-5px); }
+    }
+
+    .input-area { border-top: 1px solid var(--border); padding: 1rem 1.25rem; display: flex; gap: 10px; align-items: flex-end; }
+    textarea {
+      flex: 1; border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+      resize: none; min-height: 44px; max-height: 120px;
+      background: var(--bg); color: var(--text); outline: none;
+      transition: border-color 0.15s; line-height: 1.5;
+    }
+    textarea:focus { border-color: var(--accent); }
+    textarea::placeholder { color: var(--text-muted); }
+
+    button#send-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--accent); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.15s, opacity 0.15s;
+    }
+    button#send-btn:hover:not(:disabled) { background: var(--accent-dark); }
+    button#send-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    button#send-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .hint { font-size: 11px; color: var(--text-muted); padding: 0 1.25rem 0.75rem; font-style: italic; }
+
+    .page-footer { margin-top: 1.5rem; font-size: 11px; color: #aaa; text-align: center; line-height: 1.8; }
+
+    @media (max-width: 480px) {
+      body { padding: 1rem 0.5rem; }
+      .page-header h1 { font-size: 18px; }
+      .messages { max-height: 360px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="institution">Universität Bern · CDE · Proseminar Nachhaltige Entwicklung</div>
+    <h1>Wissenschaftliche Fragestellung entwickeln</h1>
+    <p>KI-gestütztes Begleitgespräch zur Themendisposition</p>
+  </div>
+
+  <div class="chat-card">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-label" id="progress-label">Bereich 0 von 7 abgeschlossen</div>
+    <div class="area-chips" id="area-chips"><span class="chip" id="chip-1">Themengebiet</span><span class="chip" id="chip-2">Begriffsklärung</span><span class="chip" id="chip-3">Problemstellung</span><span class="chip" id="chip-4">Bezug NE</span><span class="chip" id="chip-5">Fragestellung</span><span class="chip" id="chip-6">Eingrenzung</span><span class="chip" id="chip-7">Forschungsstand</span></div>
+    <div class="messages" id="messages"><div class="msg ai"><div class="avatar">HL</div><div class="bubble">Guten Tag. Welcher Schlüsseltext wurde für Ihre Themendisposition bearbeitet?</div></div></div>
+    <div class="hint">Tipp: Bringen Sie immer zuerst Ihren eigenen Vorschlag ein – auch wenn er noch unfertig ist.</div>
+    <div class="input-area">
+      <textarea id="user-input" placeholder="Ihre Antwort…" rows="1"></textarea>
+      <button id="send-btn">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    Proseminar «Einführung in wissenschaftliches Arbeiten für eine Nachhaltige Entwicklung»<br>
+    Centre for Development and Environment (CDE), Universität Bern
+  </div>
+
+  <script>
+    const WORKER_URL = 'https://proseminar-proxy.cloudflare-dagger816.workers.dev/';
+
+    const SYSTEM = `Du bist ein/e strenge/r und anspruchsvolle/r Hochschullehrende/r am Centre for Development and Environment (CDE) der Universität Bern. Du führst Studierende des Proseminars «Einführung in wissenschaftliches Arbeiten für eine Nachhaltige Entwicklung» durch ein strukturiertes Begleitgespräch zur Entwicklung ihrer wissenschaftlichen Fragestellung für die Themendisposition.
+
+DEINE ROLLE:
+- Du stellst kritische, zielgerichtete Fragen – du gibst keine fertigen Antworten
+- Du prüfst Kohärenz zwischen den Antworten und forderst Reflexion
+- Du gibst keinen «Spiegelfehlschuss»: Stimme nicht einfach zu, sondern hinterfrage
+- Du motivierst, wenn Antworten zu vage oder ausweichend sind, und beharrst auf einer Antwort
+
+ABSOLUT VERBOTEN:
+- Du schlägst NIEMALS eine fertige wissenschaftliche Fragestellung vor, solange der/die Studierende noch keinen eigenen Entwurf eingebracht hat
+- Erst nach einem eigenen Vorschlag des Studierenden darfst du einen Verbesserungshinweis geben
+- Wenn du einen Verbesserungsvorschlag machst, bitte den Studierenden immer, ihn kritisch zu reflektieren
+
+GESPRÄCHSSTRUKTUR – 7 Schlüsselbereiche (nicht notwendigerweise linear):
+1. Themengebiet & Relevanz des Schlüsseltexts
+2. Begriffsklärung zentraler Konzepte
+3. Problemstellung & Erklärungsansätze
+4. Bezug zur Nachhaltigen Entwicklung
+5. Wissenschaftliche Fragestellung (präzise, überprüfbar)
+6. Ziele und Nicht-Ziele / Eingrenzung
+7. Stand der Forschung / weitere Literatur
+
+KRITERIEN einer guten wissenschaftlichen Fragestellung:
+- Präzision: klar und eindeutig formuliert
+- Überprüfbarkeit: empirisch oder analytisch beantwortbar
+- Relevanz: Bezug zur Forschungsliteratur und zu NE-Debatten
+- Eingrenzung: sinnvoll begrenzt (zeitlich, räumlich, thematisch)
+- Herleitung: ergibt sich logisch aus dem Schlüsseltext und der Problemstellung
+
+FORMAT DEINER ANTWORTEN:
+- Stelle immer nur EINE Frage pro Antwort
+- Kurze, direkte Rückmeldung auf die Antwort des Studierenden, dann eine Folgefrage
+- Antworte auf Deutsch
+- Am Ende jeder Antwort gib eine JSON-Zeile aus: {"bereich": N} wobei N die Nummer des aktuellen Schlüsselbereichs (1-7) ist. Wenn noch kein spezifischer Bereich, dann 0.
+
+EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre Themendisposition bearbeitet?»`;
+
+    const AREAS = ['', 'Themengebiet', 'Begriffsklärung', 'Problemstellung', 'Bezug NE', 'Fragestellung', 'Eingrenzung', 'Forschungsstand'];
+
+    let history = [];
+    let isLoading = false;
+    let currentArea = 0;
+    let completedAreas = new Set();
+
+    const messagesEl    = document.getElementById('messages');
+    const inputEl       = document.getElementById('user-input');
+    const sendBtn       = document.getElementById('send-btn');
+    const progressFill  = document.getElementById('progress-fill');
+    const progressLabel = document.getElementById('progress-label');
+    const chipsEl       = document.getElementById('area-chips');
+
+    AREAS.slice(1).forEach((name, i) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.id = 'chip-' + (i + 1);
+      chip.textContent = name;
+      chipsEl.appendChild(chip);
+    });
+
+    function updateProgress() {
+      const pct = Math.round((completedAreas.size / 7) * 100);
+      progressFill.style.width = pct + '%';
+      progressLabel.textContent = completedAreas.size === 0
+        ? 'Bereich 0 von 7 abgeschlossen'
+        : `${completedAreas.size} von 7 Bereichen abgeschlossen`;
+      AREAS.slice(1).forEach((_, i) => {
+        const n = i + 1;
+        const chip = document.getElementById('chip-' + n);
+        chip.className = 'chip' + (completedAreas.has(n) ? ' done' : (currentArea === n ? ' active' : ''));
+      });
+    }
+
+    function addMessage(role, text) {
+      const clean = text.replace(/\{"bereich":\s*\d+\}/g, '').trim();
+      const div = document.createElement('div');
+      div.className = 'msg ' + role;
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.textContent = role === 'ai' ? 'HL' : 'Sie';
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = clean;
+      div.appendChild(avatar);
+      div.appendChild(bubble);
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function showTyping() {
+      const div = document.createElement('div');
+      div.className = 'msg ai';
+      div.id = 'typing-indicator';
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.textContent = 'HL';
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.innerHTML = '<div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+      div.appendChild(avatar);
+      div.appendChild(bubble);
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function removeTyping() {
+      const t = document.getElementById('typing-indicator');
+      if (t) t.remove();
+    }
+
+    function extractArea(text) {
+      const m = text.match(/\{"bereich":\s*(\d+)\}/);
+      return m ? parseInt(m[1]) : null;
+    }
+
+    async function callWorker(messages) {
+      const resp = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: SYSTEM,
+          messages
+        })
+      });
+      if (!resp.ok) throw new Error('Worker-Fehler: ' + resp.status);
+      const data = await resp.json();
+      return data.content?.[0]?.text || '';
+    }
+
+    async function sendMessage() {
+      const text = inputEl.value.trim();
+      if (!text || isLoading) return;
+      inputEl.value = '';
+      inputEl.style.height = 'auto';
+      isLoading = true;
+      sendBtn.disabled = true;
+      addMessage('user', text);
+      history.push({ role: 'user', content: text });
+      showTyping();
+      try {
+        const aiText = await callWorker(history);
+        removeTyping();
+        const area = extractArea(aiText);
+        if (area && area > 0) {
+          if (currentArea > 0 && currentArea !== area) completedAreas.add(currentArea);
+          currentArea = area;
+          updateProgress();
+        }
+        history.push({ role: 'assistant', content: aiText });
+        addMessage('ai', aiText);
+      } catch(e) {
+        removeTyping();
+        addMessage('ai', 'Verbindungsfehler. Bitte versuchen Sie es erneut oder kontaktieren Sie Ihre Betreuungsperson.');
+      }
+      isLoading = false;
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
+
+    async function init() {
+      showTyping();
+      try {
+        const aiText = await callWorker([{ role: 'user', content: 'Starte das Gespräch.' }]);
+        removeTyping();
+        history.push({ role: 'user', content: 'Starte das Gespräch.' });
+        history.push({ role: 'assistant', content: aiText });
+        addMessage('ai', aiText);
+      } catch(e) {
+        removeTyping();
+        const fallback = 'Guten Tag. Welcher Schlüsseltext wurde für Ihre Themendisposition bearbeitet?';
+        history.push({ role: 'user', content: 'Starte das Gespräch.' });
+        history.push({ role: 'assistant', content: fallback });
+        addMessage('ai', fallback);
+      }
+      progressLabel.textContent = 'Bereich 0 von 7 abgeschlossen';
+      inputEl.disabled = false;
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    inputEl.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    });
+    inputEl.addEventListener('input', () => {
+      sendBtn.disabled = !inputEl.value.trim() || isLoading;
+      inputEl.style.height = 'auto';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+    });
+
+    init();
+  </script>
+
+
+</body></html>
