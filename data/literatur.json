@@ -1,0 +1,128 @@
+{
+  "semester": "Herbstsemester 2025",
+  "themen": [
+    {
+      "thema": "Zukunftsfähiges Wirtschaften? Green Growth, Degrowth oder Post-Growth",
+      "experte": "Bader Christoph",
+      "literatur": [
+        "Widuto, A., Evroux, C., & Spinaci, S. (2023). Von Wachstum zu „mehr als Wachstum": Konzepte und Herausforderungen (No. PE 747.107; EPRS Report). Europäisches Parlament."
+      ]
+    },
+    {
+      "thema": "Zukunft der Arbeit",
+      "experte": "Bezzola Nicolà",
+      "literatur": [
+        "Gerold, S. (2019). Neubewertungen von Arbeit: Vielfalt von Tätigkeiten ermöglichen und kombinieren. In I. Seidl & A. Zahrnt (Hrsg.), Tätigsein in der Postwachstumsgesellschaft (S. 59–73). Metropolis-Verlag."
+      ]
+    },
+    {
+      "thema": "Gender – eine sinnvolle Analysekategorie für Nachhaltige Entwicklung?",
+      "experte": "Bieri Sabin",
+      "literatur": [
+        "Butler, J. (2024). What About Sex? In J. Butler, Who's afraid of gender? (S. 170–187). Allen Lane.",
+        "Criado Perez, C. (2019). It's not the disaster that kills you. In C. Criado Perez, Invisible women: Exposing data bias in a world designed for men (S. 296–309). Chatto & Windus."
+      ]
+    },
+    {
+      "thema": "Einflussfaktoren für die Einführung von Photovoltaik-Anlagen in Haushalten",
+      "experte": "Duygan Mert",
+      "literatur": [
+        "Alipour, M., Salim, H., Stewart, R. A., & Sahin, O. (2020). Predictors, taxonomy of predictors, and correlations of predictors with the decision behaviour of residential solar photovoltaics adoption: A review. Renewable and Sustainable Energy Reviews, 123, 109749. https://doi.org/10.1016/j.rser.2020.109749"
+      ]
+    },
+    {
+      "thema": "Schutzgebiete und Biodiversität: Effektivität, Umweltgerechtigkeit und internationale Zielsetzungen",
+      "experte": "Fitz Juri",
+      "literatur": [
+        "Loos, J. (2021). Reconciling conservation and development in protected areas of the Global South. Basic and Applied Ecology, 54, 108–118. https://doi.org/10.1016/j.baae.2021.04.005",
+        "Visconti, P., Butchart, S. H. M., Brooks, T. M., Langhammer, P. F., Marnewick, D., Vergara, S., Yanosky, A., & Watson, J. E. M. (2019). Protected area targets post-2020. Science, 364(6437), 239–241. https://doi.org/10.1126/science.aav6886"
+      ]
+    },
+    {
+      "thema": "Kollektivgüter (Commons), Entwicklung lokaler Regelwerke und Nachhaltigkeit",
+      "experte": "Haller Tobias",
+      "literatur": [
+        "Haller, T. (2019). The Different Meanings of Land in the Age of Neoliberalism: Theoretical Reflections on Commons and Resilience Grabbing from a Social Anthropological Perspective. Land, 8(7), 104. https://doi.org/10.3390/land8070104",
+        "Haller, T., Acciaioli, G., & Rist, S. (2016). Constitutionality: Conditions for Crafting Local Ownership of Institution-Building Processes. Society & Natural Resources, 29(1), 68–87. https://doi.org/10.1080/08941920.2015.1041661"
+      ]
+    },
+    {
+      "thema": "Der potenzielle Beitrag sozialer, ökonomischer und ökologischer Effekte von Erwerbsarbeitszeitkürzungen zu einer Nachhaltigen Entwicklung",
+      "experte": "Hanbury Hugo",
+      "literatur": [
+        "Hanbury, H., Illien, P., Ming, E., Moser, S., Bader, C., & Neubert, S. (2023). Working less for more? A systematic review of the social, economic, and ecological effects of working time reduction policies in the global North. Sustainability: Science, Practice and Policy, 19(1), 2222595. https://doi.org/10.1080/15487733.2023.2222595"
+      ]
+    },
+    {
+      "thema": "Nachhaltigkeitsbürger*innen werden: Die Bedeutung der Bildung für eine Nachhaltige Entwicklung",
+      "experte": "Lewis Anna Lena",
+      "literatur": [
+        "Rieckmann, M. (2025). Education for Sustainable Development Goals. Theoretical Foundations and Pedagogical Practice. In B. Freitag-Hild, S. Goertz, I. Malmberg, & L. P. Juang (Hrsg.), Educating Teachers for Sustainable Development and Global Citizenship (S. 25–37). Universitätsverlag Potsdam. https://doi.org/10.25932/publishup-66559",
+        "Schank, C., & Rieckmann, M. (2019). Socio-economically Substantiated Education for Sustainable Development: Development of Competencies and Value Orientations Between Individual Responsibility and Structural Transformation. Journal of Education for Sustainable Development, 13(1), 67–91. https://doi.org/10.1177/0973408219844849"
+      ]
+    },
+    {
+      "thema": "Start-ups: Die Rolle von Einhörnern und Zebras im Nachhaltigkeitstransformationen",
+      "experte": "Poelsma Felix",
+      "literatur": [
+        "De Gennaro, D., Mormile, S., Piscopo, G., & Adinolfi, P. (2023). In the jungle, the mighty jungle, the zebras are teal tonight: Investigating the organizational forms of Generation Z-driven Italian start-ups. Journal of Small Business and Enterprise Development, 30(6), 1129–1155. https://doi.org/10.1108/JSBED-02-2023-0063"
+      ]
+    },
+    {
+      "thema": "Probleme und Herausforderungen der Landwirtschaft und des Ernährungssystems",
+      "experte": "Scharrer Bettina",
+      "literatur": [
+        "Moser, P. (2015). Zwischen Nachhaltigkeit und Effizienz. Ein analytisch-historischer Blick auf die Potenziale und Grenzen der (bäuerlichen) Landwirtschaft. Der kritische Agrarbericht 2015, 154–157.",
+        "Scharrer, B. (2022). Fördert die Schweizer Agrarpolitik die Entwicklung einer nachhaltigen und standortgerechten Landwirtschaft ausreichend? Eine Analyse der aktuellen Instrumente, Zielkonflikte und des Handlungsbedarfs (Working Paper No. NRP 73). CDE, University of Bern.",
+        "Voget-Kleschin, L., & Hampicke, U. (2016). Landwirtschaft und Ernährung. In K. Ott, J. Dierks, & L. Voget-Kleschin (Hrsg.), Handbuch Umweltethik (S. 247–256). J.B. Metzler. https://doi.org/10.1007/978-3-476-05193-6_39",
+        "Weisshaidinger, R., Ramsak-Noemi, K., Biedermann, R., Schwank, O., Petrasek, R., Bartel, A., & Stolze, M. (2016). Umweltziele Landwirtschaft—Anspruch und Wirklichkeit. Österreichische Fachtagung für Biologische Landwirtschaft, 77–80."
+      ]
+    },
+    {
+      "thema": "Geschlechterperspektiven in der nachhaltigen Landnutzung: Relevanz, Herausforderungen und Potenziale",
+      "experte": "Steinböck Camilla",
+      "literatur": [
+        "Okpara, U. T., Stringer, L. C., & Akhtar-Schuster, M. (2019). Gender and land degradation neutrality: A cross-country analysis to support more equitable practices. Land Degradation & Development, 30(11), 1368–1378. https://doi.org/10.1002/ldr.3326",
+        "UNCCD & FAO. (2024). Women-led solutions for drought resilience: Summary for Policy-Makers. United Nations Convention to Combat Desertification (UNCCD) and Food and Agriculture Organization (FAO)."
+      ]
+    },
+    {
+      "thema": "Nachhaltigkeit und Gerechtigkeit in Ernährungssystemen: Wie kann Wandel stattfinden?",
+      "experte": "Tribaldos Theresa",
+      "literatur": [
+        "Tribaldos, T., & Kortetmäki, T. (2022). Just transition principles and criteria for food systems and beyond. Environmental Innovation and Societal Transitions, 43, 244–256. https://doi.org/10.1016/j.eist.2022.04.005"
+      ]
+    },
+    {
+      "thema": "Nachhaltigkeit, Konsumgesellschaft und „Moderne" aus historischer Perspektive",
+      "experte": "Vlachos Alexandra",
+      "literatur": [
+        "Du Pisani, J. A. (2006). Sustainable development – historical roots of the concept. Environmental Sciences, 3(2), 83–96. https://doi.org/10.1080/15693430600688831",
+        "Pfister, C. (2009). Die Konsumgesellschaft – Entstehungsbedingungen und Folgen eines gesellschaftlich-geophysikalischen Experiments. Rote Revue – sozialdemokratische Zeitschrift für Politik, Wirtschaft und Kultur, 87(2), 2–5."
+      ]
+    },
+    {
+      "thema": "Nachhaltigkeitstransformation: Die Rolle von Zukunftsbildern",
+      "experte": "Wymann Susanne & Portner Brigitte",
+      "literatur": [
+        "Rupp, J., & Schmitz, H. (2022). Zukunftsbilder für grüne, klimaresiliente Quartiere. RaumPlanung – Fachzeitschrift für räumliche Planung und Forschung, 218(5), 8–14.",
+        "Wiek, A., & Iwaniec, D. (2014). Quality criteria for visions and visioning in sustainability science. Sustainability Science, 9(4), 497–512. https://doi.org/10.1007/s11625-013-0208-6"
+      ]
+    },
+    {
+      "thema": "Datengerechtigkeit im Naturschutz",
+      "experte": "Zabel Astrid",
+      "literatur": [
+        "Pritchard, R., Sauls, L. A., Oldekop, J. A., Kiwango, W. A., & Brockington, D. (2022). Data justice and biodiversity conservation. Conservation Biology, 36(5), e13919. https://doi.org/10.1111/cobi.13919"
+      ]
+    },
+    {
+      "thema": "Entwaldung in den Tropen, Naturschutz und Ökosystemleistungen",
+      "experte": "Zähringer Julie",
+      "literatur": [
+        "Costanza, R., De Groot, R., Braat, L., Kubiszewski, I., Fioramonti, L., Sutton, P., Farber, S., & Grasso, M. (2017). Twenty years of ecosystem services: How far have we come and how far do we still need to go? Ecosystem Services, 28, 1–16. https://doi.org/10.1016/j.ecoser.2017.09.008",
+        "Curtis, P. G., Slay, C. M., Harris, N. L., Tyukavina, A., & Hansen, M. C. (2018). Classifying drivers of global forest loss. Science, 361(6407), 1108–1111. https://doi.org/10.1126/science.aau3445"
+      ]
+    }
+  ]
+}
