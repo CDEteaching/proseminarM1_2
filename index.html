@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0057)file:///C:/Users/Christoph%20Bader/Downloads/index_1.html -->
-<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wissenschaftliche Fragestellung – Proseminar NE</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com/">
-  <link href="./index_files/css2" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -129,7 +129,6 @@
     button#send-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
     .hint { font-size: 11px; color: var(--text-muted); padding: 0 1.25rem 0.75rem; font-style: italic; }
-
     .page-footer { margin-top: 1.5rem; font-size: 11px; color: #aaa; text-align: center; line-height: 1.8; }
 
     @media (max-width: 480px) {
@@ -149,14 +148,14 @@
 
   <div class="chat-card">
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-    <div class="progress-label" id="progress-label">Bereich 0 von 7 abgeschlossen</div>
-    <div class="area-chips" id="area-chips"><span class="chip" id="chip-1">Themengebiet</span><span class="chip" id="chip-2">Begriffsklärung</span><span class="chip" id="chip-3">Problemstellung</span><span class="chip" id="chip-4">Bezug NE</span><span class="chip" id="chip-5">Fragestellung</span><span class="chip" id="chip-6">Eingrenzung</span><span class="chip" id="chip-7">Forschungsstand</span></div>
-    <div class="messages" id="messages"><div class="msg ai"><div class="avatar">HL</div><div class="bubble">Guten Tag. Welcher Schlüsseltext wurde für Ihre Themendisposition bearbeitet?</div></div></div>
+    <div class="progress-label" id="progress-label">Gespräch wird geladen…</div>
+    <div class="area-chips" id="area-chips"></div>
+    <div class="messages" id="messages"></div>
     <div class="hint">Tipp: Bringen Sie immer zuerst Ihren eigenen Vorschlag ein – auch wenn er noch unfertig ist.</div>
     <div class="input-area">
-      <textarea id="user-input" placeholder="Ihre Antwort…" rows="1"></textarea>
-      <button id="send-btn">
-        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      <textarea id="user-input" placeholder="Ihre Antwort…" rows="1" disabled></textarea>
+      <button id="send-btn" disabled>
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
   </div>
@@ -220,13 +219,17 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
     const progressLabel = document.getElementById('progress-label');
     const chipsEl       = document.getElementById('area-chips');
 
-    AREAS.slice(1).forEach((name, i) => {
-      const chip = document.createElement('span');
-      chip.className = 'chip';
-      chip.id = 'chip-' + (i + 1);
-      chip.textContent = name;
-      chipsEl.appendChild(chip);
-    });
+    // Chips einmalig beim Laden erstellen
+    const chipsAlreadyBuilt = chipsEl.children.length > 0;
+    if (!chipsAlreadyBuilt) {
+      AREAS.slice(1).forEach((name, i) => {
+        const chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.id = 'chip-' + (i + 1);
+        chip.textContent = name;
+        chipsEl.appendChild(chip);
+      });
+    }
 
     function updateProgress() {
       const pct = Math.round((completedAreas.size / 7) * 100);
@@ -237,7 +240,7 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
       AREAS.slice(1).forEach((_, i) => {
         const n = i + 1;
         const chip = document.getElementById('chip-' + n);
-        chip.className = 'chip' + (completedAreas.has(n) ? ' done' : (currentArea === n ? ' active' : ''));
+        if (chip) chip.className = 'chip' + (completedAreas.has(n) ? ' done' : (currentArea === n ? ' active' : ''));
       });
     }
 
@@ -258,6 +261,7 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
     }
 
     function showTyping() {
+      if (document.getElementById('typing-indicator')) return;
       const div = document.createElement('div');
       div.className = 'msg ai';
       div.id = 'typing-indicator';
@@ -294,7 +298,10 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
           messages
         })
       });
-      if (!resp.ok) throw new Error('Worker-Fehler: ' + resp.status);
+      if (!resp.ok) {
+        const errText = await resp.text();
+        throw new Error('Worker-Fehler ' + resp.status + ': ' + errText);
+      }
       const data = await resp.json();
       return data.content?.[0]?.text || '';
     }
@@ -322,7 +329,7 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
         addMessage('ai', aiText);
       } catch(e) {
         removeTyping();
-        addMessage('ai', 'Verbindungsfehler. Bitte versuchen Sie es erneut oder kontaktieren Sie Ihre Betreuungsperson.');
+        addMessage('ai', 'Verbindungsfehler: ' + e.message);
       }
       isLoading = false;
       sendBtn.disabled = false;
@@ -362,6 +369,5 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
 
     init();
   </script>
-
-
-</body></html>
+</body>
+</html>
