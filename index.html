@@ -148,7 +148,7 @@
 
   <div class="chat-card">
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-    <div class="progress-label" id="progress-label">Gespräch wird geladen…</div>
+    <div class="progress-label" id="progress-label">Wird geladen…</div>
     <div class="area-chips" id="area-chips"></div>
     <div class="messages" id="messages"></div>
     <div class="hint">Tipp: Bringen Sie immer zuerst Ihren eigenen Vorschlag ein – auch wenn er noch unfertig ist.</div>
@@ -168,7 +168,21 @@
   <script>
     const WORKER_URL = 'https://proseminar-proxy.cloudflare-dagger816.workers.dev/';
 
-    const SYSTEM = `Du bist ein/e strenge/r und anspruchsvolle/r Hochschullehrende/r am Centre for Development and Environment (CDE) der Universität Bern. Du führst Studierende des Proseminars «Einführung in wissenschaftliches Arbeiten für eine Nachhaltige Entwicklung» durch ein strukturiertes Begleitgespräch zur Entwicklung ihrer wissenschaftlichen Fragestellung für die Themendisposition.
+    // Literaturliste aus data/literatur.json laden und in lesbaren Text umwandeln
+    function formatLiteratur(data) {
+      let text = `SEMESTERTHEMEN UND SCHLÜSSELTEXTE (${data.semester}):\n\n`;
+      data.themen.forEach((t, i) => {
+        text += `Thema ${i + 1}: ${t.thema}\n`;
+        text += `Expert*in: ${t.experte}\n`;
+        text += `Schlüsseltext(e):\n`;
+        t.literatur.forEach(l => { text += `  - ${l}\n`; });
+        text += '\n';
+      });
+      return text;
+    }
+
+    function buildSystemPrompt(literaturText) {
+      return `Du bist ein/e strenge/r und anspruchsvolle/r Hochschullehrende/r am Centre for Development and Environment (CDE) der Universität Bern. Du führst Studierende des Proseminars «Einführung in wissenschaftliches Arbeiten für eine Nachhaltige Entwicklung» durch ein strukturiertes Begleitgespräch zur Entwicklung ihrer wissenschaftlichen Fragestellung für die Themendisposition.
 
 DEINE ROLLE:
 - Du stellst kritische, zielgerichtete Fragen – du gibst keine fertigen Antworten
@@ -197,6 +211,14 @@ KRITERIEN einer guten wissenschaftlichen Fragestellung:
 - Eingrenzung: sinnvoll begrenzt (zeitlich, räumlich, thematisch)
 - Herleitung: ergibt sich logisch aus dem Schlüsseltext und der Problemstellung
 
+${literaturText}
+
+Nutze diese Literaturliste um:
+- Den genannten Schlüsseltext des Studierenden zu identifizieren
+- Gezielt auf Kernargumente und Themenschwerpunkte des jeweiligen Texts einzugehen
+- Zu prüfen, ob die Fragestellung zum Schlüsseltext und Thema passt
+- Bei Unklarheiten nachzufragen, welches Thema und welcher Text gemeint ist
+
 FORMAT DEINER ANTWORTEN:
 - Stelle immer nur EINE Frage pro Antwort
 - Kurze, direkte Rückmeldung auf die Antwort des Studierenden, dann eine Folgefrage
@@ -204,9 +226,11 @@ FORMAT DEINER ANTWORTEN:
 - Am Ende jeder Antwort gib eine JSON-Zeile aus: {"bereich": N} wobei N die Nummer des aktuellen Schlüsselbereichs (1-7) ist. Wenn noch kein spezifischer Bereich, dann 0.
 
 EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre Themendisposition bearbeitet?»`;
+    }
 
     const AREAS = ['', 'Themengebiet', 'Begriffsklärung', 'Problemstellung', 'Bezug NE', 'Fragestellung', 'Eingrenzung', 'Forschungsstand'];
 
+    let systemPrompt = '';
     let history = [];
     let isLoading = false;
     let currentArea = 0;
@@ -219,17 +243,14 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
     const progressLabel = document.getElementById('progress-label');
     const chipsEl       = document.getElementById('area-chips');
 
-    // Chips einmalig beim Laden erstellen
-    const chipsAlreadyBuilt = chipsEl.children.length > 0;
-    if (!chipsAlreadyBuilt) {
-      AREAS.slice(1).forEach((name, i) => {
-        const chip = document.createElement('span');
-        chip.className = 'chip';
-        chip.id = 'chip-' + (i + 1);
-        chip.textContent = name;
-        chipsEl.appendChild(chip);
-      });
-    }
+    // Chips einmalig erstellen
+    AREAS.slice(1).forEach((name, i) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.id = 'chip-' + (i + 1);
+      chip.textContent = name;
+      chipsEl.appendChild(chip);
+    });
 
     function updateProgress() {
       const pct = Math.round((completedAreas.size / 7) * 100);
@@ -294,7 +315,7 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
         body: JSON.stringify({
           model: 'claude-sonnet-4-5',
           max_tokens: 1000,
-          system: SYSTEM,
+          system: systemPrompt,
           messages
         })
       });
@@ -337,7 +358,21 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
     }
 
     async function init() {
+      progressLabel.textContent = 'Literaturliste wird geladen…';
       showTyping();
+
+      // Literaturliste laden
+      try {
+        const resp = await fetch('data/literatur.json');
+        const data = await resp.json();
+        const literaturText = formatLiteratur(data);
+        systemPrompt = buildSystemPrompt(literaturText);
+      } catch(e) {
+        // Fallback ohne Literaturliste
+        systemPrompt = buildSystemPrompt('(Keine Literaturliste verfügbar – bitte data/literatur.json prüfen.)');
+      }
+
+      // Gespräch starten
       try {
         const aiText = await callWorker([{ role: 'user', content: 'Starte das Gespräch.' }]);
         removeTyping();
@@ -351,6 +386,7 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
         history.push({ role: 'assistant', content: fallback });
         addMessage('ai', fallback);
       }
+
       progressLabel.textContent = 'Bereich 0 von 7 abgeschlossen';
       inputEl.disabled = false;
       sendBtn.disabled = false;
