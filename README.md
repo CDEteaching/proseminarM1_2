@@ -4,13 +4,15 @@ Centre for Development and Environment (CDE), Universität Bern
 
 ---
 
+## Was ist das?
+
 Dieses Tool unterstützt Studierende dabei, eigenständig eine wissenschaftliche Fragestellung für ihre Themendisposition zu entwickeln. Es simuliert ein Gespräch mit einer/einem anspruchsvollen Hochschullehrenden, die/der kritische Fragen stellt – ohne fertige Antworten zu liefern.
 
 Das Tool kennt:
 - alle **Seminar-Themen und Schlüsseltexte** des jeweiligen Semesters
 - die **Inhalte des Begleitskripts** zum Online-Lernmodul (Kriterien für Forschungsfragen, Themenpyramide, SPSS-Methode, Gütekriterien, Bezug zu NE usw.)
 
-Das Ziel ist nicht, den Studierenden die Arbeit abzunehmen, sondern sie durch gezielte Fragen dazu zu bringen, selbst zu denken, zu argumentieren und ihre Fragestellung schrittweise zu schärfen. 
+Es kann dadurch gezielt auf den jeweiligen Schlüsseltext und auf Konzepte eingehen, die die Studierenden im Lernmodul erarbeitet haben.
 
 ---
 
@@ -56,7 +58,7 @@ Das Ziel ist nicht, den Studierenden die Arbeit abzunehmen, sondern sie durch ge
 
 ### Pädagogische Idee
 
-Das Tool basiert auf dem Prinzip des **problemorientierten Lernens** und ergänzt die bestehende Seminarstruktur. Es soll die Studierenden zwischen den Präsenzsitzungen beim eigenständigen Denken begleiten – ähnlich wie ein Gespräch in der Sprechstunde, aber jederzeit verfügbar.
+Das Tool basiert auf dem Prinzip des **problemorientierten Lernens** und ergänzt die bestehende Seminarstruktur. Es begleitet Studierende zwischen den Präsenzsitzungen beim eigenständigen Denken – ähnlich wie ein Gespräch in der Sprechstunde, aber jederzeit verfügbar.
 
 Die KI übernimmt die Rolle einer/eines kritischen Hochschullehrenden und:
 - prüft Kohärenz zwischen den Antworten
@@ -68,14 +70,16 @@ Die KI übernimmt die Rolle einer/eines kritischen Hochschullehrenden und:
 ### Einbettung im Seminar
 
 Das Tool eignet sich besonders **zwischen diesen Seminarphasen**:
-- Nach der Einführung in den Schlüsseltext 
-- Vor dem «Meet the Expert»-Termin
-- Zur Vorbereitung des Research Pitch
+- Nach der Einführung in den Schlüsseltext (bis 25.10.)
+- Vor dem «Meet the Expert»-Termin (27.–31.10.)
+- Zur Vorbereitung des Research Pitch (bis 09.11.)
+
+---
 
 ## Ressourcen pflegen: der `data/`-Ordner
- 
+
 Alle inhaltlichen Ressourcen liegen im Ordner `data/`. Die `index.html` muss **nie** verändert werden.
- 
+
 ```
 proseminarM1_2/
 ├── index.html           ← nie anfassen
@@ -83,18 +87,19 @@ proseminarM1_2/
     ├── literatur.json   ← jedes Semester aktualisieren
     └── skript.json      ← bei inhaltlicher Überarbeitung des Lernmoduls aktualisieren
 ```
- 
+
 ---
- 
+
 ### `literatur.json` – Semesterthemen und Schlüsseltexte
- 
+
 Diese Datei enthält alle Themen, Expert*innen und Schlüsseltexte des laufenden Semesters. Sie wird **jedes Semester** aktualisiert.
- 
+
 **So bearbeiten:**
 1. Datei `data/literatur.json` im Repository öffnen
 2. Stift-Icon (Edit) klicken
 3. `"semester"`, `"thema"`, `"experte"` und `"literatur"` anpassen
 4. *Commit changes* klicken
+
 **Format:**
 ```json
 {
@@ -110,15 +115,15 @@ Diese Datei enthält alle Themen, Expert*innen und Schlüsseltexte des laufenden
   ]
 }
 ```
- 
+
 ---
- 
+
 ### `skript.json` – Inhalte des Begleitskripts
- 
+
 Diese Datei enthält die für das Gespräch relevanten Kerninhalte des Online-Lernmoduls: Kriterien für Forschungsfragen, Themenpyramide, SPSS-Methode, Gütekriterien, Bezug zu NE, Ziele von Forschungsfragen und den Rahmen des Proseminars.
- 
+
 Sie muss nur aktualisiert werden, wenn das **Begleitskript inhaltlich überarbeitet** wird.
- 
+
 **Format:**
 ```json
 {
@@ -126,11 +131,11 @@ Sie muss nur aktualisiert werden, wenn das **Begleitskript inhaltlich überarbei
   "inhalt": "Freitext mit den relevanten Inhalten..."
 }
 ```
- 
+
 ---
- 
+
 ## Technischer Aufbau
- 
+
 ```
 Studierende (Browser)
     │
@@ -144,22 +149,23 @@ GitHub Pages (index.html)
 Cloudflare Worker (Proxy, versteckt den API-Key)
     │
     ▼
-Anthropic API (Claude claude-sonnet-4-5)
+Anthropic API (Claude claude-sonnet-5-5)
 ```
- 
+
 Der API-Key ist serverseitig im Cloudflare Worker hinterlegt – für Studierende nicht sichtbar. Die Kosten pro Gespräch betragen erfahrungsgemäss wenige Rappen.
- 
+
 ### Verhalten der KI anpassen
- 
+
 Das Gesprächsverhalten (Rolle, Ton, Schlüsselbereiche) ist in der Funktion `buildSystemPrompt()` in der `index.html` definiert. Dort können bei Bedarf Anpassungen vorgenommen werden – ohne dass `literatur.json` oder `skript.json` betroffen sind.
- 
+
 ---
- 
+
 ## Datenschutz
- 
+
 - Es werden keine Gesprächsdaten gespeichert
 - Jede Sitzung beginnt ohne Gedächtnis an frühere Gespräche
 - Der API-Key ist nur im Cloudflare Worker hinterlegt und nie im Browser sichtbar
+
 ---
- 
+
 *Entwickelt für das Proseminar Nachhaltige Entwicklung, Modul 1 – Centre for Development and Environment (CDE), Universität Bern, Herbstsemester 2025*

@@ -251,7 +251,7 @@ EINSTIEG: Beginne immer mit: «Guten Tag. Welcher Schlüsseltext wurde für Ihre
       const resp = await fetch(WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: 'claude-sonnet-4-5', max_tokens: 1000, system: systemPrompt, messages })
+        body: JSON.stringify({ model: 'claude-sonnet-5-5', max_tokens: 1000, system: systemPrompt, messages })
       });
       if (!resp.ok) { const e = await resp.text(); throw new Error('Worker-Fehler ' + resp.status + ': ' + e); }
       const data = await resp.json();
